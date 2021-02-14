@@ -25,7 +25,7 @@ class MoviesService {
     let movieDetails;
     try {
       const response = await axios.get(`${MOVIES_URL}/${movieId}`);
-      movieDetails = get(response, 'data');
+      movieDetails = get(response, 'data[0]');
     } catch (error) {
       console.log(`${this.name}: Error fetching Movie details for ${movieId}: ${error}`);
     }

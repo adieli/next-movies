@@ -13,8 +13,7 @@
       position="center"
     ></v-img>
 
-    <v-card-title>
-      {{ movieName }}
+    <v-card-title v-html="movieName">
     </v-card-title>
 
     <v-card-subtitle>
@@ -29,21 +28,26 @@
       <v-btn
         color="orange lighten-2"
         text
+        @click="onCardButtonClick(movieId)"
       >
         Explore
       </v-btn>
-
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import Vuex from 'vuex';
+
+const { mapActions } = Vuex;
+
 export default {
   name: 'MovieCard',
   data: () => ({
     cardMaxWidth: 344,
     imageHeight: '250px',
     imageWidth: '344px',
+    displayMovieDialog: false,
   }),
   props: {
     imageUrl: {
@@ -61,6 +65,18 @@ export default {
     duration: {
       type: String,
       required: true,
+    },
+    movieId: {
+      type: String,
+      required: true,
+    },
+  },
+  methods: {
+    ...mapActions({
+      setDisplayMovieDetails: 'setDisplayMovieDetails',
+    }),
+    onCardButtonClick(movieId) {
+      this.setDisplayMovieDetails(movieId);
     },
   },
 };

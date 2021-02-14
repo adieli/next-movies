@@ -10,13 +10,17 @@
         <div class="movies-list">
           <movie-card :releaseYear="movie.released"
                       :movieName="movie.title"
+                      :movieId="movie.id"
                       :duration="movie.runtime"
                       :imageUrl="movie.image"></movie-card>
         </div>
       </v-col>
     </v-row>
     <v-spacer></v-spacer>
-    <v-pagination v-model="pageNumber" :length="this.pagesNumber" @input="onNextPageClick"/>
+    <v-pagination class="movies-list-pagination"
+                  v-model="pageNumber"
+                  :length="this.pagesNumber"
+                  @input="onNextPageClick"/>
   </v-container>
 </template>
 
@@ -37,8 +41,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      moviesList: 'getMovies',
-      movieDetails: 'getMovieDetails',
+      moviesList: 'getFilteredMoviesForDisplay',
     }),
     pagesNumber() {
       // We divide the total amount of movies returned from server by amount of movies per page
@@ -50,7 +53,7 @@ export default {
       return this.moviesList.slice(start, end);
     },
   },
-  mounted() {
+  created() {
     this.fetchMovies();
   },
   methods: {
@@ -68,3 +71,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .movies-list-pagination {
+    margin-top: 20px;
+  }
+  </style>
