@@ -12,8 +12,11 @@
 <script>
 import Vuex from 'vuex';
 import moviesList from './components/MoviesList.vue';
-import movieDialog from './components/MovieDialog.vue';
 import filterBar from './components/FilterBar.vue';
+
+/* eslint-disable global-require */
+const movieDialog = (r) => require.ensure([], () => r(require('./components/MovieDialog.vue')), 'movieDialog');
+/* eslint-enable global-require */
 
 const { mapGetters } = Vuex;
 

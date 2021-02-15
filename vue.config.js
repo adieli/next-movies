@@ -2,6 +2,6 @@ module.exports = {
   transpileDependencies: [
     'vuetify',
   ],
-  // publicPath: '/next-movies/public/',
-  // outputDir: './public',
+  publicPath: '/next-movies/public/',
+  outputDir: './public',
 };
