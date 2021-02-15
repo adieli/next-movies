@@ -95,7 +95,7 @@ export default {
     },
     applyFilterValue(item, queryText) {
       const isNumericType = this.filterByType !== FILTER_TYPES.NAME;
-      const itemName = isNumericType ? item : item.toLowerCase();
+      const itemName = isNumericType ? item.toString() : item.toLowerCase();
       const searchText = isNumericType ? queryText : queryText.toLowerCase();
       return itemName.indexOf(searchText) > -1;
     },
