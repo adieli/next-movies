@@ -14,7 +14,7 @@
         color="white"
         item-text="name"
         clearable
-        label="Filter By"
+        label="Filter type"
         @change="onFilterTypeSelected"
         @click:clear="onFilterTypeClear"
       ></v-autocomplete>
@@ -27,7 +27,7 @@
         item-text="name"
         :disabled="!filterByType"
         clearable
-        label="Filter value"
+        :label="filterLabel"
         @change="onFilterValueSelected"
         @click:clear="onFilterValueClear"
       ></v-autocomplete>
@@ -61,6 +61,12 @@ import { orderBy } from 'lodash';
 import { FILTER_TYPES, FILTER_TYPES_MAP } from '../common/consts';
 
 const { mapActions, mapGetters } = Vuex;
+const FILTER_LABEL = {
+  [FILTER_TYPES.NAME]: 'Filter value',
+  [FILTER_TYPES.DURATION]: 'Duration(min) less or equal to value',
+  [FILTER_TYPES.YEAR]: 'Year greater or equal to value',
+  [FILTER_TYPES.RATING]: 'Rating greater or equal to value',
+};
 
 export default {
   name: 'FilterBar',
@@ -75,6 +81,7 @@ export default {
       filterValues: [],
       filterByValue: '',
       filterByType: '',
+      filterLabel: FILTER_LABEL[FILTER_TYPES.NAME],
     };
   },
   computed: {
@@ -107,11 +114,13 @@ export default {
         this.filterValues = this.moviesList.map((movie) => movie[filterId]);
         this.filterValues = orderBy(this.filterValues, [FILTER_TYPES_MAP[this.filterByType]], 'desc');
         this.filterByType = selectedValue;
+        this.filterLabel = FILTER_LABEL[selectedValue];
       }
     },
     onFilterTypeClear() {
       this.filterByType = '';
       this.onFilterValueClear();
+      this.filterLabel = FILTER_LABEL[FILTER_TYPES.NAME];
     },
     onFilterValueSelected(selectedValue) {
       this.filterByValue = selectedValue;

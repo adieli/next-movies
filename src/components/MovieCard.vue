@@ -6,11 +6,13 @@
     :max-width="cardMaxWidth"
   >
     <v-img
+      class="card-image"
       :src="imageUrl"
       :max-height="imageHeight"
       :max-width="imageWidth"
       :contain="true"
       position="center"
+      @click="onImageClick()"
     ></v-img>
 
     <v-card-title v-html="movieName">
@@ -77,8 +79,20 @@ export default {
       setDisplayMovieDetails: 'setDisplayMovieDetails',
     }),
     onCardButtonClick() {
+      this.displayMovieDetails();
+    },
+    onImageClick() {
+      this.displayMovieDetails();
+    },
+    displayMovieDetails() {
       this.setDisplayMovieDetails(this.movieId);
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .card-image {
+    cursor: pointer;
+  }
+</style>
