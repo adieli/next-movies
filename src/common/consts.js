@@ -8,8 +8,8 @@ const FILTER_TYPES = {
 // A map of filter name to their api value
 const FILTER_TYPES_MAP = {
   [FILTER_TYPES.YEAR]: 'released',
-  [FILTER_TYPES.DURATION]: 'runtime',
-  [FILTER_TYPES.RATING]: 'rating',
+  [FILTER_TYPES.DURATION]: 'numericRuntime',
+  [FILTER_TYPES.RATING]: 'numericRating',
   [FILTER_TYPES.NAME]: 'title',
 };
 

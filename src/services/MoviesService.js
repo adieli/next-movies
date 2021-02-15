@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { get } from 'lodash';
+import { transformMovies, transformMovie } from './moviesTransformer';
 
-// In real project I's add also apiResources file and clients for each service
+// In real project I'd add also apiResources file and clients for each service
 const MOVIES_URL = 'http://localhost:3000/movies';
 
 class MoviesService {
@@ -13,7 +13,7 @@ class MoviesService {
     let moviesList;
     try {
       const response = await axios.get(MOVIES_URL);
-      moviesList = get(response, 'data');
+      moviesList = transformMovies(response);
     } catch (error) {
       moviesList = Promise.reject(error);
       console.log(`${this.name}: Error fetching Movies list: ${error}`);
@@ -25,7 +25,7 @@ class MoviesService {
     let movieDetails;
     try {
       const response = await axios.get(`${MOVIES_URL}/${movieId}`);
-      movieDetails = get(response, 'data[0]');
+      movieDetails = transformMovie(response);
     } catch (error) {
       console.log(`${this.name}: Error fetching Movie details for ${movieId}: ${error}`);
     }

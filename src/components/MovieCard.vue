@@ -28,11 +28,12 @@
       <v-btn
         color="orange lighten-2"
         text
-        @click="onCardButtonClick(movieId)"
+        @click="onCardButtonClick()"
       >
         Explore
       </v-btn>
     </v-card-actions>
+
   </v-card>
 </template>
 
@@ -55,7 +56,7 @@ export default {
       required: true,
     },
     releaseYear: {
-      type: String,
+      type: Number,
       required: true,
     },
     movieName: {
@@ -75,8 +76,8 @@ export default {
     ...mapActions({
       setDisplayMovieDetails: 'setDisplayMovieDetails',
     }),
-    onCardButtonClick(movieId) {
-      this.setDisplayMovieDetails(movieId);
+    onCardButtonClick() {
+      this.setDisplayMovieDetails(this.movieId);
     },
   },
 };

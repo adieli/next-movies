@@ -57,6 +57,7 @@
 
 <script>
 import Vuex from 'vuex';
+import { orderBy } from 'lodash';
 import { FILTER_TYPES, FILTER_TYPES_MAP } from '../common/consts';
 
 const { mapActions, mapGetters } = Vuex;
@@ -93,15 +94,18 @@ export default {
       return itemName.indexOf(searchText) > -1;
     },
     applyFilterValue(item, queryText) {
-      const itemName = item.toLowerCase();
-      const searchText = queryText.toLowerCase();
+      const isNumericType = this.filterByType !== FILTER_TYPES.NAME;
+      const itemName = isNumericType ? item : item.toLowerCase();
+      const searchText = isNumericType ? queryText : queryText.toLowerCase();
       return itemName.indexOf(searchText) > -1;
     },
     onFilterTypeSelected(selectedValue) {
-      // Locate the id of the filter
+      // The if handles a case of reset
       if (selectedValue) {
+        // Locate the id of the filter
         const filterId = this.filterTypes.find(({ name }) => name === selectedValue).id;
         this.filterValues = this.moviesList.map((movie) => movie[filterId]);
+        this.filterValues = orderBy(this.filterValues, [FILTER_TYPES_MAP[this.filterByType]], 'desc');
         this.filterByType = selectedValue;
       }
     },
